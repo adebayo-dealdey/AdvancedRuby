@@ -8,7 +8,7 @@ class String
   end
 
   def to_f
-    numeric? ? Float(self) : 0.0
+    numeric? ? Float(self) : exit
   end
 
   def validate_format
@@ -20,6 +20,11 @@ class String
 
   private
   def numeric?
-    Float(self) != nil rescue false
+    begin
+      Float(self) != nil
+    rescue
+      puts 'Invalid value detected'
+      false
+    end
   end
 end
