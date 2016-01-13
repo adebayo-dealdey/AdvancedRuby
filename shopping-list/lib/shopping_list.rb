@@ -6,7 +6,7 @@ class ShoppingList
   def product_items(&block)
     instance_eval(&block)
   end
-  def add_item(name, quantity)
+  def add(name, quantity)
     item = Item.new(name, quantity)
     @list << item
   end
