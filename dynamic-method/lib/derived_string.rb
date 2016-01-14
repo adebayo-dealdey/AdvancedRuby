@@ -11,17 +11,12 @@ class DerivedString < String
   def split_by_dots
     split('.')
   end
-  
-  def pad
-    ' ' + self + ' '
+
+  def split_by(delimiter, case_sensitive=false)
+    case_sensitive ? split(/#{delimiter}/) : split(/#{delimiter}/i)
   end
-  
+
   def not_empty?
     !empty?
   end
-  
-  def count_vowels
-    scan(/[aeiou]/i).count
-  end
-
 end

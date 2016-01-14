@@ -1,21 +1,17 @@
-=begin
-Derive a class from String which defines a few methods on Strings, eg exclude? (opp of include).
-From the command line, create an object of the new class and prompt for a method name to call on the object.
-Once the user enters the method name, execute it and display the results on the command line.	
-=end
+require_relative '../lib/derived_string'
+require_relative '../lib/method_analyser'
 
-require_relative "../lib/string_derived"
-require_relative "../lib/argument_handler"
-
-print "Enter the string:"
-string_derived_object = StringDerived.new(gets.chomp)
-argument_handler_object = ArgumentHandler.new
-puts "Enter one of the following methods:\nexclude?\npad\nnot_empty?\ncount_vowels"
-puts "You can enter any method of string class also"
+print 'Enter the string:    '
+derived_string = DerivedString.new(gets.chomp)
+puts "Enter a methods include default methods in a String class:\n     exclude?\n     split_by_spaces\n     split_by_dots\n     split_by\n     not_empty?"
 method_name = gets.chomp
-parameter_data = string_derived_object.method(method_name).parameters
-argument_handler_object.count_parameters(parameter_data)
-argument_handler_object.display_parameters
-
-argument_handler_object.input_args
-puts string_derived_object.send method_name, *argument_handler_object.args
+parameters = derived_string.method(method_name).parameters
+method_analyser = MethodAnalyser.new(parameters)
+method_analyser.instructions.each do |instruction|
+  puts instruction
+end
+puts "The method structure is as follows: #{method_name}(#{method_analyser.parameters_names.join(', ')})"
+print 'Supply the parameters in same structure as above:        '
+user_input = gets.chomp
+params = user_input.split(/,\s*/)
+puts derived_string.send method_name, *params
